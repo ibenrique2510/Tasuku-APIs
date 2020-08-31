@@ -1,11 +1,12 @@
 # steps:
 # - name: 'gcr.io/cloud-builders/gcloud'
 #   args: ['app', 'deploy']
+# - name: 'gcr.io/cloud-builders/mvn'
 
 steps:
-# - name: 'gcr.io/cloud-builders/mvn'
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['install']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/spring-boot', '.']
 images: ['gcr.io/$PROJECT_ID/spring-boot']
+
