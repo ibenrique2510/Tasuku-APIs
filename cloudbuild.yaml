@@ -3,7 +3,8 @@
 #   args: ['app', 'deploy']
 
 steps:
-- name: 'gcr.io/cloud-builders/mvn'
+# - name: 'gcr.io/cloud-builders/mvn'
+- name: 'gcr.io/cloud-builders/gcloud'
   args: ['install']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/spring-boot', '.']
