@@ -5,7 +5,7 @@ steps:
   - 'deploy'
   - 'cloudrunservice'
   - '--image'
-  - 'gcr.io/--tag=gcr.io/$PROJECT_ID/Tasuku-APIs'
+  - 'gcr.io/$PROJECT_ID/Tasuku-APIs'
   - '--region'
   - 'asia-southeast1'
   - '--platform'
