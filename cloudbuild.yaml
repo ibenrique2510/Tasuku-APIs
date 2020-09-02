@@ -12,13 +12,13 @@
   # - 'managed'
   # - '--allow-unauthenticated'
   
-# steps:
-# - name: 'gcr.io/cloud-builders/mvn'
-  # args: ['install']
-# - name: 'gcr.io/cloud-builders/docker'
-  # args: ['build', '--tag=gcr.io/$PROJECT_ID/tasuku-pi', '.']
-# images: ['gcr.io/$PROJECT_ID/tasuku-api']
-
 steps:
-- name: 'gcr.io/$PROJECT_ID/Tasuku-APIs'
-  args: ['mvn', 'appengine:deploy']
+- name: 'gcr.io/cloud-builders/mvn'
+  args: ['install']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/tasuku-pi', '.']
+images: ['gcr.io/$PROJECT_ID/tasuku-api']
+
+# steps:
+# - name: 'gcr.io/$PROJECT_ID/Tasuku-APIs'
+  # args: ['mvn', 'appengine:deploy']
