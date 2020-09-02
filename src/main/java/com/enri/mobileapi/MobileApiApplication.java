@@ -11,7 +11,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class MobileApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MobileApiApplication.class, args);
+		SpringApplication.run(MobileApiApplication.class, args);	
+		
 	}
 
 }

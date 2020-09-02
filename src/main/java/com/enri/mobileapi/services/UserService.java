@@ -500,7 +500,7 @@ public class UserService {
 			} else {
 				userDetails.setIsDeleted(Constant.IS_NOT_DELETED);
 				userDetails.setCreatedBy(createdBy);
-				userDetails.setCreatedAt(System.currentTimeMillis());
+				userDetails.setCreatedAt(Utility.getSystemCurrentMilli());
 				response.put("result", userRepository.save(userDetails));
 			}
 		} catch (Exception e) {
@@ -553,7 +553,7 @@ public class UserService {
 			noti.setUserId(entry.getKey());
 			noti.setDetails(titleMsg + " - " + bodyMsg);
 			noti.setIsRead(Constant.IS_NOT_DELETED);
-			noti.setCreatedAt(System.currentTimeMillis());
+			noti.setCreatedAt(Utility.getSystemCurrentMilli());
 			notificationRepository.save(noti);
 		}
 

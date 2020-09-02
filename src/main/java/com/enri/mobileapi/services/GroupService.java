@@ -107,7 +107,7 @@ public class GroupService {
 			String bodyMsg = null;
 			
 			groupDetails.setIsDeleted(Constant.IS_NOT_DELETED);
-			groupDetails.setCreatedAt(System.currentTimeMillis());
+			groupDetails.setCreatedAt(Utility.getSystemCurrentMilli());
 			groupDetails.setCreatedBy(createdBy);
 			Group addedGroup = groupRepository.save(groupDetails);
 			response.replace("result", addedGroup);
@@ -198,7 +198,7 @@ public class GroupService {
 			Notification noti = new Notification();
 			noti.setUserId(entry.getKey());
 			noti.setDetails(titleMsg + "\n" + bodyMsg);
-			noti.setCreatedAt(System.currentTimeMillis());
+			noti.setCreatedAt(Utility.getSystemCurrentMilli());
 			noti.setIsRead(Constant.IS_NOT_DELETED);
 			notificationRepository.save(noti);
 		}

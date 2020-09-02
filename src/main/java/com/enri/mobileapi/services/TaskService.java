@@ -280,7 +280,7 @@ public class TaskService {
 			} else {
 				task.setIsDeleted(Constant.IS_DELETED);
 				task.setUpdaterId(updaterId);
-				task.setUpdatedAt(System.currentTimeMillis());
+				task.setUpdatedAt(Utility.getSystemCurrentMilli());
 				response.put("result", taskRepository.save(task));
 
 				ArrayList<Long> relators = new ArrayList<Long>();
@@ -322,7 +322,7 @@ public class TaskService {
 				String bodyMsg = null;
 
 				if (taskDetails.getStatus() != null) {
-					task.setApprovedAt(System.currentTimeMillis());
+					task.setApprovedAt(Utility.getSystemCurrentMilli());
 					task.setApproverId(updaterId);
 
 					String acceptStatus = taskDetails.getStatus();
@@ -343,7 +343,7 @@ public class TaskService {
 					}
 				}
 				task.setUpdaterId(updaterId);
-				task.setUpdatedAt(System.currentTimeMillis());
+				task.setUpdatedAt(Utility.getSystemCurrentMilli());
 				response.put("result", taskRepository.save(task));
 
 				pushToTokens = getPushTokensByIds(relators);
@@ -392,8 +392,8 @@ public class TaskService {
 				}
 
 				task.setUpdaterId(updaterId);
-				task.setCommittedAt(System.currentTimeMillis());
-				task.setUpdatedAt(System.currentTimeMillis());
+				task.setCommittedAt(Utility.getSystemCurrentMilli());
+				task.setUpdatedAt(Utility.getSystemCurrentMilli());
 				response.put("result", taskRepository.save(task));
 
 				pushToTokens = getPushTokensByIds(relators);
@@ -450,9 +450,9 @@ public class TaskService {
 				}
 
 				task.setCommenterId(updaterId);
-				task.setEvaluatedAt(System.currentTimeMillis());
+				task.setEvaluatedAt(Utility.getSystemCurrentMilli());
 				task.setUpdaterId(updaterId);
-				task.setUpdatedAt(System.currentTimeMillis());
+				task.setUpdatedAt(Utility.getSystemCurrentMilli());
 				response.put("result", taskRepository.save(task));
 
 				pushToTokens = getPushTokensByIds(relators);
@@ -488,7 +488,7 @@ public class TaskService {
 				}
 				if (taskDetails.getStartAt() != null) {
 					task.setStartAt(taskDetails.getStartAt());
-					if (task.getStartAt() <= System.currentTimeMillis()) {
+					if (task.getStartAt() <= Utility.getSystemCurrentMilli()) {
 						task.setStatus(Constant.ON_GOING);
 					}
 				}
@@ -526,7 +526,7 @@ public class TaskService {
 				
 				
 				task.setUpdaterId(updaterId);
-				task.setUpdatedAt(System.currentTimeMillis());
+				task.setUpdatedAt(Utility.getSystemCurrentMilli());
 				response.put("result", taskRepository.save(task));
 
 				pushToTokens = getPushTokensByIds(relators);
@@ -561,13 +561,13 @@ public class TaskService {
 				bodyMsg = "User " + creator.getName() + " has created a task and waiting for your approval";
 			}
 			if (creator.getRole().equals(Constant.MANAGER) || creator.getRole().equals(Constant.ADMIN)) {
-				if (taskDetails.getStartAt() > System.currentTimeMillis()) {
+				if (taskDetails.getStartAt() > Utility.getSystemCurrentMilli()) {
 					taskDetails.setStatus(Constant.NOT_STARTED_YET);
 				} else {
 					taskDetails.setStatus(Constant.ON_GOING);
 				}
 				taskDetails.setAssigneeId(taskDetails.getAssigneeId());
-				taskDetails.setApprovedAt(System.currentTimeMillis());
+				taskDetails.setApprovedAt(Utility.getSystemCurrentMilli());
 				relators.add(taskDetails.getAssigneeId());
 				pushToTokens = getPushTokensByIds(relators);
 				titleMsg = "You has been assigned a task";
@@ -578,9 +578,9 @@ public class TaskService {
 			taskDetails.setAssignerId(creatorId);
 			taskDetails.setIsDeleted(Constant.IS_NOT_DELETED);
 			taskDetails.setCreatorId(creatorId);
-			taskDetails.setCreatedAt(System.currentTimeMillis());
+			taskDetails.setCreatedAt(Utility.getSystemCurrentMilli());
 			taskDetails.setUpdaterId(creatorId);
-			taskDetails.setUpdatedAt(System.currentTimeMillis());
+			taskDetails.setUpdatedAt(Utility.getSystemCurrentMilli());
 			response.put("result", taskRepository.save(taskDetails));
 			pushNotifications(titleMsg, bodyMsg, pushToTokens);
 		} catch (Exception e) {
@@ -613,7 +613,7 @@ public class TaskService {
 			Notification noti = new Notification();
 			noti.setUserId(entry.getKey());
 			noti.setDetails(titleMsg + "\n" + bodyMsg);
-			noti.setCreatedAt(System.currentTimeMillis());
+			noti.setCreatedAt(Utility.getSystemCurrentMilli());
 			noti.setIsRead(Constant.IS_NOT_DELETED);
 			notificationRepository.save(noti);
 		}
@@ -667,9 +667,9 @@ public class TaskService {
 				@Override
 				public void run() {
 					try {
-//						autoApprove();
+						autoApprove();
 						autoUpdateStatus();
-//						autoRemindDeadline();
+						autoRemindDeadline();
 					} catch (Throwable e) {
 						e.printStackTrace();
 					}
@@ -677,14 +677,14 @@ public class TaskService {
 			});
 //			// calculating time left until the first run at 1 AM after calling
 //			// runScheduledTasks() for the first time
-//			ZonedDateTime current = ZonedDateTime.now(ZoneId.of(Constant.TIME_ZONE));
-//			ZonedDateTime nextRun = current.withHour(Constant.HOUR_TO_RUN_SCHEDULED_TASKS)
-//					.withMinute(Constant.MINUTE_TO_RUN_SCHEDULED_TASKS)
-//					.withSecond(Constant.SECOND_TO_RUN_SCHEDULED_TASKS);
-//			if (current.compareTo(nextRun) > 0) {
-//				nextRun = nextRun.plusDays(1);
-//			}
-//			long delay = Duration.between(current, nextRun).getSeconds();
+			ZonedDateTime current = ZonedDateTime.now(ZoneId.of(Constant.TIME_ZONE));
+			ZonedDateTime nextRun = current.withHour(Constant.HOUR_TO_RUN_SCHEDULED_TASKS)
+					.withMinute(Constant.MINUTE_TO_RUN_SCHEDULED_TASKS)
+					.withSecond(Constant.SECOND_TO_RUN_SCHEDULED_TASKS);
+			if (current.compareTo(nextRun) > 0) {
+				nextRun = nextRun.plusDays(1);
+			}
+			long delay = Duration.between(current, nextRun).getSeconds();
 			// creates a thread pool that can schedule commands to run
 			// after a given delay, or to execute periodically.
 			ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -715,11 +715,11 @@ public class TaskService {
 			String bodyMsg = "Your task was declined by the System due to overtime";
 			
 			for (Task task : list) {
-				if (task.getStartAt() <= System.currentTimeMillis()) {
+				if (task.getStartAt() <= Utility.getSystemCurrentMilli()) {
 					task.setStatus(Constant.DECLINED);
 					task.setApproverId(Constant.SYSTEM_ID);
-					task.setApprovedAt(System.currentTimeMillis());
-					task.setUpdatedAt(System.currentTimeMillis());
+					task.setApprovedAt(Utility.getSystemCurrentMilli());
+					task.setUpdatedAt(Utility.getSystemCurrentMilli());
 					task.setUpdaterId(Constant.SYSTEM_ID);
 					taskRepository.save(task);
 					relators.add(task.getAssigneeId());
@@ -752,20 +752,20 @@ public class TaskService {
 			for (Task task : list) {
 				if (task.getStatus().equals(Constant.ON_GOING) || task.getStatus().equals(Constant.NOT_STARTED_YET)) {
 					if (task.getStatus().contentEquals(Constant.NOT_STARTED_YET)) {
-						if (task.getStartAt() <= System.currentTimeMillis()) {
+						if (task.getStartAt() <= Utility.getSystemCurrentMilli()) {
 							task.setStatus(Constant.ON_GOING);
 							
-							task.setUpdatedAt(System.currentTimeMillis());
+							task.setUpdatedAt(Utility.getSystemCurrentMilli());
 							task.setUpdaterId(Constant.SYSTEM_ID);
 							taskRepository.save(task);
 							relators.add(task.getAssigneeId());
 						}
 					}
 					if (task.getStatus().equals(Constant.ON_GOING)) {
-						if (task.getEndAt() <= System.currentTimeMillis()) {
+						if (task.getEndAt() <= Utility.getSystemCurrentMilli()) {
 							task.setStatus(Constant.OVERDUE);
 							
-							task.setUpdatedAt(System.currentTimeMillis());
+							task.setUpdatedAt(Utility.getSystemCurrentMilli());
 							task.setUpdaterId(Constant.SYSTEM_ID);
 							taskRepository.save(task);
 							relators.add(task.getAssigneeId());
@@ -796,7 +796,7 @@ public class TaskService {
 			String bodyMsg = null;
 			
 			for (Task task : list) {
-				long currentDateTime = System.currentTimeMillis();
+				long currentDateTime = Utility.getSystemCurrentMilli();
 				long interval = task.getEndAt() - currentDateTime;
 				int hoursLeft = (int) interval / Constant.MILLI_TO_HOUR;
 				
