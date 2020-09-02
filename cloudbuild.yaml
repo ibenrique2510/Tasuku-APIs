@@ -20,5 +20,5 @@
 # images: ['gcr.io/$PROJECT_ID/tasuku-api']
 
 steps:
-- name: 'gcr.io/$PROJECT_ID/tasuku-api'
+- name: 'gcr.io/$PROJECT_ID/Tasuku-APIs'
   args: ['mvn', 'appengine:deploy']
