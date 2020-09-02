@@ -7,7 +7,7 @@ steps:
   - '--image'
   - 'gcr.io/--tag=gcr.io/$PROJECT_ID/tasuku'
   - '--region'
-  - 'asia-southeast2'
+  - 'asia-southeast1'
   - '--platform'
   - 'managed'
   - '--allow-unauthenticated'
