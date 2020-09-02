@@ -2,7 +2,7 @@ steps:
 - name: 'gcr.io/cloud-builders/mvn'
   args: ['install']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/tasuku-api', '.']
+  args: ['build', 'gcr.io/$PROJECT_ID/tasuku-api', '.']
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
   - 'run'
