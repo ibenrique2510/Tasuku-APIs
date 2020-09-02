@@ -10,6 +10,7 @@ RUN mvn package
 
 FROM adoptopenjdk/openjdk11
 
+COPY --from=builder /app/target/tasuku-api.jar/java.jar
 
 # Run the web service on container startup.
 CMD ["java","-Djava.security.egd=file:/dev/./urandom","-Dserver.port=${PORT}","-jar","/java.jar"]

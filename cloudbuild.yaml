@@ -19,14 +19,14 @@
   # args: ['build', '--tag=gcr.io/$PROJECT_ID/tasuku-api', '.']
 # images: ['gcr.io/$PROJECT_ID/tasuku-api']
 
-steps:
-- name: 'gcr.io/$PROJECT_ID/Tasuku-APIs'
-  args: ['mvn', 'appengine:deploy']
-  
-  
 # steps:
-# - name: 'gcr.io/cloud-builders/mvn'
-  # args: ['install']
-# - name: 'gcr.io/cloud-builders/docker'
-  # args: ['build', '--tag=gcr.io/$PROJECT_ID/spring-boot', '.']
-# images: ['gcr.io/$PROJECT_ID/spring-boot']
+# - name: 'gcr.io/$PROJECT_ID/Tasuku-APIs'
+  # args: ['mvn', 'appengine:deploy']
+  
+  
+steps:
+- name: 'gcr.io/cloud-builders/mvn'
+  args: ['install']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/tasuku-api', '.']
+images: ['gcr.io/$PROJECT_ID/tasuku-api']
