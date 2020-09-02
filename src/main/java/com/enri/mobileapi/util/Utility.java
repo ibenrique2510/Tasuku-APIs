@@ -20,7 +20,7 @@ public class Utility {
 		TimeZone timeZone = calendar.getTimeZone();
 		calendar.setTimeZone(timeZone);
 
-		timeZone = TimeZone.getTimeZone("Asia/Singapore");
+		timeZone = TimeZone.getTimeZone("Asia/Ho_Chi_Minh");
 		calendar.setTimeZone(timeZone);
 
 		return calendar.getTimeInMillis();
