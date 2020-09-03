@@ -562,12 +562,12 @@ public class TaskService {
 				bodyMsg = "User " + creator.getName() + " has created a task and waiting for your approval";
 			}
 			if (creator.getRole().equals(Constant.MANAGER) || creator.getRole().equals(Constant.ADMIN)) {
-// 				if (taskDetails.getStartAt() > Utility.getSystemCurrentMilli()) {
-// 					taskDetails.setStatus(Constant.NOT_STARTED_YET);
-// 				} else {
-// 					taskDetails.setStatus(Constant.ON_GOING);
-// 				}
-				taskDetails.setStatus(Constant.ON_GOING);
+				if (taskDetails.getStartAt() > Utility.getSystemCurrentMilli()) {
+					taskDetails.setStatus(Constant.NOT_STARTED_YET);
+				} else {
+					taskDetails.setStatus(Constant.ON_GOING);
+				}
+// 				taskDetails.setStatus(Constant.ON_GOING);
 				taskDetails.setAssigneeId(taskDetails.getAssigneeId());
 				taskDetails.setApprovedAt(Utility.getSystemCurrentMilli());
 				relators.add(taskDetails.getAssigneeId());
