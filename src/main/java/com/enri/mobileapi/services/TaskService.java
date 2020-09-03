@@ -750,6 +750,8 @@ public class TaskService {
 			String bodyMsg = "Your task has been updated by the System";
 			
 			for (Task task : list) {
+				System.out.println("========> start at: " + task.getStartAt());
+				System.out.println("========> current time of system: " + Utility.getSystemCurrentMilli());
 				if (task.getStatus().equals(Constant.ON_GOING) || task.getStatus().equals(Constant.NOT_STARTED_YET)) {
 					if (task.getStatus().contentEquals(Constant.NOT_STARTED_YET)) {
 						if (task.getStartAt() <= Utility.getSystemCurrentMilli()) {
